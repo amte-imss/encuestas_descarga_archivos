@@ -41,11 +41,17 @@ class Operaciones extends MY_Controller {
     }
 
     public function volumetria() {
+        $this->template->setMainTitle("Volumetría");
+        $main_contet = $this->load->view('operativa/volumetria.tpl.php', null, true);
+        $this->template->setMainContent($main_contet);
         $this->template->getTemplate();
     }
 
     public function concentrado_alumnos() {
 
+        $this->template->setMainTitle("Concentrado de certificado de alumnos");
+        $main_contet = $this->load->view('operativa/concentrado_alumnos.tpl.php', null, true);
+        $this->template->setMainContent($main_contet);
         $this->template->getTemplate();
     }
 
