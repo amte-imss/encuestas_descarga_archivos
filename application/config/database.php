@@ -75,16 +75,42 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 
+//$db['default'] = array(
+////    'dsn' => 'pgsql:host=11.32.41.13;port=5433;dbname=sied_moodle',// se agrego la base de datos correctamente kio_prod201 -> nueva_kio
+//    'dsn' => 'pgsql:host=11.32.41.13;port=5433;dbname=kio_agosto_18',// se agrego la base de datos correctamente kio_prod201 -> nueva_kio
+//    'hostname' => '11.32.41.13',
+//    'username' => 'innovaedu',
+//    //'password' => '1n_n0v43d.u',
+//    'password' => 'nPgEoXCqd/?gV.,',
+//    'database' => 'kio_agosto_18',
+//    'dbdriver' => 'pdo',
+//    'port' => '5433',
+//    'dbprefix' => '',
+//    'pconnect' => TRUE,
+//    'db_debug' => (ENVIRONMENT !== 'production'),
+//    'cache_on' => FALSE,
+//    'cachedir' => '',
+//    'char_set' => 'utf8',
+//    'dbcollat' => 'utf8_general_ci',
+//    'swap_pre' => '',
+//    'autoinit' => TRUE,
+//    'schema' => 'departments, encuestas, nomina',
+//    'encrypt' => FALSE,
+//    'compress' => FALSE,
+//    'stricton' => FALSE,
+//    'failover' => array(),
+//    'save_queries' => TRUE
+//);
 $db['default'] = array(
 //    'dsn' => 'pgsql:host=11.32.41.13;port=5433;dbname=sied_moodle',// se agrego la base de datos correctamente kio_prod201 -> nueva_kio
-    'dsn' => 'pgsql:host=11.32.41.13;port=5433;dbname=kio_agosto_18',// se agrego la base de datos correctamente kio_prod201 -> nueva_kio
-    'hostname' => '11.32.41.13',
+    'dsn' => 'pgsql:host=localhost;port=5432;dbname=kio_septiembre_18',// se agrego la base de datos correctamente kio_prod201 -> nueva_kio
+    'hostname' => 'localhost',
     'username' => 'innovaedu',
     //'password' => '1n_n0v43d.u',
-    'password' => 'nPgEoXCqd/?gV.,',
-    'database' => 'kio_agosto_18',
+    'password' => 'innovaedu',
+    'database' => 'kio_septiembre_18',
     'dbdriver' => 'pdo',
-    'port' => '5433',
+    'port' => '5432',
     'dbprefix' => '',
     'pconnect' => TRUE,
     'db_debug' => (ENVIRONMENT !== 'production'),

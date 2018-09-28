@@ -21,7 +21,9 @@ class Reporte_model extends CI_Model {
             GF_BLOQUES_CURSO = 'filter_matriz_bloques',
             GF_ENCUESTA_CONTESTADAS = 'encuestas_filtro_contestadas',
             GF_EVALUADOR_CONTESTADAS = 'evaluador_contestadas',
-            GF_REPORTE_GENERAL = 'reporte_general'
+            GF_REPORTE_GENERAL = 'reporte_general',
+            GF_DESCARGA_FILE_VOLUMETRIA = 'volumetria_implementaciones',
+            GF_DESCARGA_FILE_CONCENTRADO_CERT = 'concentrado_certificado_alumnos'
 
     ;
 
@@ -505,7 +507,6 @@ class Reporte_model extends CI_Model {
     }
 
     public function get_filtros_grupo($array_grupos, $condiciones = null) {
-//        pr($condiciones);
         $grupos_info = $this->getDatosPorGrupo();
         $key_datos = array();
         foreach ($array_grupos as $value) {
@@ -606,6 +607,8 @@ class Reporte_model extends CI_Model {
                     'mrdor.id' => 'Rol evaluador',
                     'mrdo.id' => 'Rol evaluado',
                 );
+            case 'years_course':
+                return $this->get_listado_anios_curso();
             default:
                 return array();
         }
@@ -630,6 +633,8 @@ class Reporte_model extends CI_Model {
             Reporte_model::GF_BLOQUES_CURSO => array('order_by'),
             Reporte_model::GF_ENCUESTA_CONTESTADAS => array('enc_con_ncon', /*'instrumento'*/),
             Reporte_model::GF_EVALUADOR_CONTESTADAS => array('buscar_docente_evaluado', 'buscar_categoria', 'rol_evaluador', 'region', 'delg_umae', 'umae', 'order_by'),
+            Reporte_model::GF_DESCARGA_FILE_VOLUMETRIA => array('years_course'),
+            Reporte_model::GF_DESCARGA_FILE_CONCENTRADO_CERT => array('years_course'),
         );
         return $array;
     }
@@ -747,6 +752,20 @@ class Reporte_model extends CI_Model {
             }
         }
 //        pr($anios);
+        return $anios;
+    }
+
+    /**
+     * 
+     * @param type $order_by Orden en que apareceran los años, de forma 
+     * descendente o ascendente
+     * @return type Años que se han impartido cursos
+     */
+    public function get_listado_anios_curso($order_by = 'desc') {
+        $this->db->select(array('EXTRACT(year from mcc.lastdate) as year_course'));
+        $this->db->group_by('1');
+        $this->db->order_by('1', $order_by);
+        $anios = $this->db->get('public.mdl_course_config mcc')->result_array();
         return $anios;
     }
 

@@ -17,23 +17,29 @@ class Operativa_model extends CI_Model {
     }
 
     /**
-     * @update 22/11/2017 LEAS
-     * @param type $id_aux
-     * @param type $target
-     * @param type $user
-     * @return type Todos los años que registran cursos
+     * 
+     * @param type $year Año de los cursos
+     * @return type Volumetria basica de los cirsos e implementaciones
      */
-    public function get_anios_cursos($order = 'desc') {
+    public function get_volumetria($year = '') {
         $this->db->flush_cache();
         $this->db->reset_query();
+        if(empty($year)){
+            return [];
+        }
         $select = array(
-            "to_char(to_timestamp(startdate),'yyyy')"
+            'mc.id "id_curso"', "TRIM(replace(mc.shortname, substring(mc.shortname from '\-\w\d+\-\d+$'),'')) clave_curso",
+            'mc.shortname nombre_corto', 'mc.fullname nombre_curso', "mcc.tutorizado",
+            'date(to_timestamp(mc.startdate)) fecha_inicio', 'mcc.lastdate fecha_fin', 
+            "substring(mc.shortname from '(\w\d+)') implementacion", 
+            "CASE WHEN  mcc.lastdate > date(now()) then 0 else 1 end es_curso_cerrado"
         );
         $this->db->select($select);
-        $this->db->order_by('1' . $order);
-        $this->db->group_by("to_char(to_timestamp(startdate),'yyyy')");
+        $this->db->join("public.mdl_course_config mcc", "mcc.course = mc.id", "INNER");
+        $this->db->order_by('mc.shortname');
+        $this->db->where("EXTRACT(year from mcc.lastdate) = " . $year);
 
-        $result = $this->db->get('public.mdl_course')->result_array();
+        $result = $this->db->get('public.mdl_course mc')->result_array();
         return $result;
     }
 
